@@ -1,0 +1,9 @@
+<%inherit file="base.html"/>
+
+<h2>Konversion fehlgeschlagen</h2>
+
+<p>${type(error).__qualname__|h}: ${error|h}</p>
+
+<pre>
+${backtrace|h}
+</pre>

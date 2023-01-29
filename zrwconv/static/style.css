@@ -1,0 +1,50 @@
+button {
+    margin-right: 1em;
+    transition: transform 200ms;
+}
+
+button.pulse {
+    transform: scale(1.1);
+}
+
+fieldset > label {
+    display: block;
+    margin-top: 0.8rem;
+}
+
+fieldset > label:first-of-type {
+    margin-top: initial;
+}
+
+#footnotes ol {
+    padding: 0;
+}
+
+#footnotes li {
+    list-style: none;
+    margin-bottom: 0.3rem;
+}
+
+#footnotes li:before {
+    content: attr(value);
+    width: 1rem;
+    text-align: right;
+    vertical-align: super;
+    font-size: x-small;
+}
+
+#footnotes li:before {
+    position: absolute;
+    left: 0;
+}
+#footnotes li {
+    position: relative;
+    display: block;
+    padding-left: 1.25rem;
+}
+
+#literature p {
+    margin-left: 1rem;
+    text-indent: -1rem;
+    margin-bottom: 0.3rem;
+}

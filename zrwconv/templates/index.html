@@ -1,0 +1,18 @@
+<%inherit file="base.html"/>
+
+<h2>Dokument hochladen</h2>
+
+<form action="/convert" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" required
+           accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+
+    <fieldset>
+        <legend>Optionen</legend>
+        <label for="footnote-links">
+            <input type="checkbox" id="footnote-links" name="footnote_links" checked>
+            Fußnoten verlinken (<a href="/help#footnote_links">Anmerkung</a>)
+        </label>
+    </fieldset>
+
+    <button>Konvertieren</button>
+</form>

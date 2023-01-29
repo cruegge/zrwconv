@@ -1,0 +1,22 @@
+<%inherit file="base.html"/>
+
+<%block name="head">
+<script src="/static/script.js"></script>
+</%block>
+
+% if warnings:
+<h3>Warnungen</h3>
+
+<ul id="messages">
+% for warning in warnings:
+    <li class="${warning.type}">${warning.message|h}
+% endfor
+</ul>
+% endif
+
+<h2>Artikel-Vorschau</h2>
+
+<button onclick="download(event, '${download_name}')">Download</button>
+<button onclick="copy(event)">Kopieren</button>
+
+<article id="preview">${body}</article>
