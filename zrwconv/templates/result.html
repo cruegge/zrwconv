@@ -1,21 +1,30 @@
 <%inherit file="base.html"/>
 
-<%block name="head">
-<script src="/static/script.js"></script>
-</%block>
-
 % if warnings:
-<h3>Warnungen</h3>
-
-<ul id="messages">
-% for warning in warnings:
-    <li class="${warning.type}">${warning.message|h}
-% endfor
-</ul>
+<details>
+    <summary>Warnungen</summary>
+    <ul id="messages">
+        % for warning in warnings:
+        <li class="${warning.type}">${warning.message|h}
+        % endfor
+    </ul>
+</details>
 % endif
 
 <h2>Artikel-Vorschau</h2>
 
+<details>
+    <summary>Hilfe</summary>
+    <p>Hier sehen Sie eine Vorschau des Artikels, die Sie in die Zwischenablage
+    kopieren oder als Datei runterladen können.
+
+    <p>Fügen Sie den kopierten Text in Typo3 als <b>Quellcode</b> ein. Zum
+    Quellcode können Sie über einen Button direkt über dem Editor-Feld in Typo3
+    umschalten.
+
+    <p>Das Erscheinungsbild hier ist nicht völlig identisch mit dem auf der
+    EZW-Webseite. Überprüfen Sie das Resultat in jedem Fall noch einmal.
+</details>
 <button onclick="download(event, '${download_name}')">Download</button>
 <button onclick="copy(event)">Kopieren</button>
 

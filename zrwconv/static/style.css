@@ -1,10 +1,13 @@
 button {
-    margin-right: 1em;
     transition: transform 200ms;
 }
 
 button.pulse {
     transform: scale(1.1);
+}
+
+button + button {
+    margin-left: var(--ok-s-2);
 }
 
 fieldset > label {
@@ -16,31 +19,57 @@ fieldset > label:first-of-type {
     margin-top: initial;
 }
 
+details {
+    display: initial;
+    border: var(--ok-b-0);
+    border-radius: var(--ok-br);
+    padding: var(--ok-s-2) var(--ok-s-3);
+}
+
+summary {
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+details[open] {
+    display: block;
+}
+
+details[open] summary {
+    margin-bottom: var(--ok-s-2);
+}
+
+details:not([open]) + button {
+    margin-left: var(--ok-s-2);
+}
+
+details + h2 {
+    margin-top: 0;
+}
+
+/* Article style */
+
 #footnotes ol {
     padding: 0;
 }
 
 #footnotes li {
+    position: relative;
+    display: block;
     list-style: none;
+    padding-left: 1.25rem; /* EZW: 1rem */
     margin-bottom: 0.3rem;
+    margin-left: 0;
 }
 
 #footnotes li:before {
     content: attr(value);
-    width: 1rem;
+    width: 1rem; /* EZW: 0.5rem */
     text-align: right;
     vertical-align: super;
-    font-size: x-small;
-}
-
-#footnotes li:before {
+    font-size: small;
     position: absolute;
     left: 0;
-}
-#footnotes li {
-    position: relative;
-    display: block;
-    padding-left: 1.25rem;
 }
 
 #literature p {
