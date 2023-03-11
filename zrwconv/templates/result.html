@@ -1,5 +1,9 @@
 <%inherit file="base.html"/>
 
+<script type="text/javascript">
+    window.onload = setup_buttons
+</script>
+
 % if warnings:
 <details>
     <summary>Warnungen</summary>
@@ -15,17 +19,24 @@
 
 <details>
     <summary>Hilfe</summary>
-    <p>Hier sehen Sie eine Vorschau des Artikels, die Sie in die Zwischenablage
-    kopieren oder als Datei runterladen können.
+    <p>Hier sehen Sie den Vorschau-Text des Artikels, den Sie in die
+    Zwischenablage kopieren können. Fügen Sie danach den kopierten Text das
+    <b>Text</b>-Feld in Typo3 ein.
 
-    <p>Fügen Sie den kopierten Text in Typo3 als <b>Quellcode</b> ein. Zum
-    Quellcode können Sie über einen Button direkt über dem Editor-Feld in Typo3
-    umschalten.
+    <p>Alternativ können Sie die Vorschau auch als HTML-Datei runterladen.
 
     <p>Das Erscheinungsbild hier ist nicht völlig identisch mit dem auf der
     EZW-Webseite. Überprüfen Sie das Resultat in jedem Fall noch einmal.
 </details>
-<button onclick="download(event, '${download_name}')">Download</button>
-<button onclick="copy(event)">Kopieren</button>
+<button id="download" onclick="download(event, '${download_name}')">Download</button>
+<button id="copy" onclick="copy(event)">Kopieren</button>
+
+<div id="clipboard-hint" class="inactive">
+    <p>Ihr Browser unterstützt nur eingeschränkte Zwischenablage-Funktionen. Bitte
+    fügen Sie den kopierten Text als <b>Quellcode</b> in Typo3 ein.
+
+    <p>Zum Quellcode können Sie über einen Button über dem Editor-Feld in Typo3
+    umschalten.
+</div>
 
 <article id="preview">${body}</article>

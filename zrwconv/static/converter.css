@@ -10,13 +10,28 @@ button + button {
     margin-left: var(--ok-s-2);
 }
 
-fieldset > label {
-    display: block;
-    margin-top: 0.8rem;
+#clipboard-hint {
+    border: var(--ok-b-0);
+    border-radius: var(--ok-br);
+    background: var(--ok-bg-1);
+    padding: var(--ok-s-2) var(--ok-s-3);
+    transition: all 0.5s ease-in-out;
 }
 
-fieldset > label:first-of-type {
-    margin-top: initial;
+#clipboard-hint.inactive {
+    overflow: hidden;
+    border: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 0;
+    height: 0;
+    opacity: 0;
+}
+
+#clipboard-hint p:not(:last-child) {
+    margin-bottom: var(--ok-s-2);
 }
 
 details {
