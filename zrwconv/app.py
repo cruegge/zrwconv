@@ -42,13 +42,15 @@ async def convert(request: web.Request):
         # is simply the fd (integer). Later, some mamooth function calls dirname() on it,
         # which of course fails. Setting the name to None seems to work, however.
         fileobj.raw.name = None
-        footnote_links = "footnote_links" in data
         body, warnings = await get_event_loop().run_in_executor(
-            None, lambda: convert_file(fileobj, footnote_links=footnote_links)
+            None, lambda: convert_file(fileobj)
         )
     except Exception as error:
         return render(
-            request, "conversion_error.html", error=error, backtrace=traceback.format_exc()
+            request,
+            "conversion_error.html",
+            error=error,
+            backtrace=traceback.format_exc(),
         )
     timestamp = datetime.now().strftime("%F_%H-%M")
     return render(

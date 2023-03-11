@@ -51,6 +51,7 @@ details + h2 {
 
 ol.footnotes {
     padding: 0;
+    counter-reset: footnote;
 }
 
 ol.footnotes li {
@@ -63,7 +64,8 @@ ol.footnotes li {
 }
 
 ol.footnotes li:before {
-    content: attr(value);
+    content: counter(footnote);
+    counter-increment: footnote;
     width: 1rem;
     text-align: right;
     vertical-align: super;

@@ -54,35 +54,21 @@ r[style-name='Artikel_Spitzmarke'] =>
 
 
 class Converter(mammoth.conversion._DocumentConverter):
-    def __init__(self, footnote_links, **options):
+    def __init__(self, **options):
         super().__init__(**options)
-        self._footnote_links = footnote_links
         self._literature = []
         self._collecting_literature = False
 
     def visit_note_reference(self, note_reference, context):
         self._note_references.append(note_reference)
-        if self._footnote_links:
-            return [
-                html.element(
-                    "a",
-                    {"href": "#" + self._note_html_id(note_reference)},
-                    [html.text(note_reference.note_id)],
-                )
-            ]
-        else:
-            return [html.text(note_reference.note_id)]
+        return [html.text(note_reference.note_id)]
 
     def visit_note(self, note, context):
         note_html = self._visit_all(note.body, context)
         if len(note_html) == 1 and note_html[0].tag_name == "p":
             # Unpack unneeded single paragraphs
             note_html = note_html[0].children
-        return [
-            html.element(
-                "li", {"id": self._note_html_id(note), "value": note.note_id}, note_html
-            )
-        ]
+        return [html.element("li", {}, note_html)]
 
     def visit_paragraph(self, paragraph, context):
         result = []
@@ -148,7 +134,7 @@ def ensure_superscript_footnote_refs(paragraph):
     return paragraph
 
 
-def convert_file(fileobj, footnote_links=True):
+def convert_file(fileobj):
     messages = []
 
     def collect(result):
@@ -169,7 +155,6 @@ def convert_file(fileobj, footnote_links=True):
     document = mammoth.transforms.paragraph(ensure_superscript_footnote_refs)(document)
 
     converter = Converter(
-        footnote_links=footnote_links,
         messages=messages,
         convert_image=lambda *args, **kwargs: {},
         id_prefix="",
