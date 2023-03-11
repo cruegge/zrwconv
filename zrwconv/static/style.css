@@ -49,31 +49,32 @@ details + h2 {
 
 /* Article style */
 
-#footnotes ol {
+ol.footnotes {
     padding: 0;
 }
 
-#footnotes li {
+ol.footnotes li {
     position: relative;
     display: block;
     list-style: none;
-    padding-left: 1.25rem; /* EZW: 1rem */
+    padding-left: 1.25rem;
     margin-bottom: 0.3rem;
     margin-left: 0;
 }
 
-#footnotes li:before {
+ol.footnotes li:before {
     content: attr(value);
-    width: 1rem; /* EZW: 0.5rem */
+    width: 1rem;
     text-align: right;
     vertical-align: super;
-    font-size: small;
+    font-size: smaller;
     position: absolute;
     left: 0;
 }
 
-#literature p {
+p.citation {
     margin-left: 1rem;
     text-indent: -1rem;
+    margin-top: 0.3rem;
     margin-bottom: 0.3rem;
 }

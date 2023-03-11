@@ -66,7 +66,7 @@ class Converter(mammoth.conversion._DocumentConverter):
             return [
                 html.element(
                     "a",
-                    dict(href="#" + self._note_html_id(note_reference)),
+                    {"href": "#" + self._note_html_id(note_reference)},
                     [html.text(note_reference.note_id)],
                 )
             ]
@@ -79,15 +79,21 @@ class Converter(mammoth.conversion._DocumentConverter):
             # Unpack unneeded single paragraphs
             note_html = note_html[0].children
         return [
-            html.element("li", dict(id=self._note_html_id(note), value=note.note_id), note_html)
+            html.element(
+                "li", {"id": self._note_html_id(note), "value": note.note_id}, note_html
+            )
         ]
 
     def visit_paragraph(self, paragraph, context):
         result = []
         for elem in super().visit_paragraph(paragraph, context):
-            if elem.tag.tag_names == ["h3"]:
-                self._collecting_literature = extract_text_from_node(elem) in LITERATURE_HEADINGS
+            if elem.tag.tag_name == "h3":
+                self._collecting_literature = (
+                    extract_text_from_node(elem) in LITERATURE_HEADINGS
+                )
             if self._collecting_literature:
+                if elem.tag.tag_name == "p":
+                    elem.tag.attributes["class"] = "citation"
                 self._literature.append(elem)
             else:
                 result.append(elem)
@@ -99,20 +105,10 @@ class Converter(mammoth.conversion._DocumentConverter):
         if footnotes := self._visit_all(
             map(document.notes.resolve, self._note_references), context
         ):
-            nodes.append(
-                html.element(
-                    "div",
-                    dict(id="footnotes"),
-                    [
-                        html.element("h3", {}, [html.text(FOOTNOTE_HEADING)]),
-                        html.element("ol", {}, footnotes),
-                    ],
-                )
-            )
+            nodes.append(html.element("h3", {}, [html.text(FOOTNOTE_HEADING)]))
+            nodes.append(html.element("ol", {"class": "footnotes"}, footnotes))
         if self._literature:
-            nodes.append(
-                html.element("div", dict(id="literature"), self._literature),
-            )
+            nodes.extend(self._literature)
         return nodes
 
 
@@ -126,7 +122,8 @@ def extract_text_from_node(node):
 def heading_heuristic(paragraph):
     runs = mammoth.transforms.get_descendants_of_type(paragraph, mammoth.documents.Run)
     if runs and all(
-        run.is_bold or mammoth.extract_raw_text_from_element(run).isspace() for run in runs
+        run.is_bold or mammoth.extract_raw_text_from_element(run).isspace()
+        for run in runs
     ):
         for run in runs:
             run.is_bold = False
@@ -143,7 +140,9 @@ def heading_heuristic(paragraph):
 
 
 def ensure_superscript_footnote_refs(paragraph):
-    for run in mammoth.transforms.get_descendants_of_type(paragraph, mammoth.documents.Run):
+    for run in mammoth.transforms.get_descendants_of_type(
+        paragraph, mammoth.documents.Run
+    ):
         if any(isinstance(c, mammoth.documents.NoteReference) for c in run.children):
             run.vertical_alignment = "superscript"
     return paragraph
@@ -158,10 +157,10 @@ def convert_file(fileobj, footnote_links=True):
 
     options = collect(
         mammoth.options.read_options(
-            dict(
-                style_map=STYLE_MAP,
-                embedded_style_map=mammoth.read_style_map(fileobj),
-            )
+            {
+                "style_map": STYLE_MAP,
+                "embedded_style_map": mammoth.read_style_map(fileobj),
+            }
         )
     )
 
@@ -178,7 +177,9 @@ def convert_file(fileobj, footnote_links=True):
         comments={},
         **options,
     )
-    nodes = converter.visit(document, mammoth.conversion._ConversionContext(is_table_header=False))
+    nodes = converter.visit(
+        document, mammoth.conversion._ConversionContext(is_table_header=False)
+    )
 
     writer = mammoth.writers.HtmlWriter()
     html.write(writer, html.collapse(html.strip_empty(nodes)))
