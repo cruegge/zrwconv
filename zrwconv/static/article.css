@@ -1,0 +1,32 @@
+ol.ezw-footnotes {
+    padding: 0;
+    counter-reset: footnote;
+}
+
+ol.ezw-footnotes li {
+    position: relative;
+    display: block;
+    list-style: none;
+    padding-left: 1.25rem;
+    margin-bottom: 0.3rem;
+    /* Insignio CSS overrides margin-left, so make this one !important */
+    margin-left: 0 !important;
+}
+
+ol.ezw-footnotes li:before {
+    content: counter(footnote);
+    counter-increment: footnote;
+    width: 1rem;
+    text-align: right;
+    vertical-align: super;
+    font-size: smaller;
+    position: absolute;
+    left: 0;
+}
+
+p.ezw-citation {
+    margin-left: 1rem;
+    text-indent: -1rem;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+}

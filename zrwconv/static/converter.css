@@ -46,37 +46,3 @@ details:not([open]) + button {
 details + h2 {
     margin-top: 0;
 }
-
-/* Article style */
-
-ol.footnotes {
-    padding: 0;
-    counter-reset: footnote;
-}
-
-ol.footnotes li {
-    position: relative;
-    display: block;
-    list-style: none;
-    padding-left: 1.25rem;
-    margin-bottom: 0.3rem;
-    margin-left: 0;
-}
-
-ol.footnotes li:before {
-    content: counter(footnote);
-    counter-increment: footnote;
-    width: 1rem;
-    text-align: right;
-    vertical-align: super;
-    font-size: smaller;
-    position: absolute;
-    left: 0;
-}
-
-p.citation {
-    margin-left: 1rem;
-    text-indent: -1rem;
-    margin-top: 0.3rem;
-    margin-bottom: 0.3rem;
-}

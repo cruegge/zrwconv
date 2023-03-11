@@ -79,7 +79,7 @@ class Converter(mammoth.conversion._DocumentConverter):
                 )
             if self._collecting_literature:
                 if elem.tag.tag_name == "p":
-                    elem.tag.attributes["class"] = "citation"
+                    elem.tag.attributes["class"] = "ezw-citation"
                 self._literature.append(elem)
             else:
                 result.append(elem)
@@ -92,7 +92,7 @@ class Converter(mammoth.conversion._DocumentConverter):
             map(document.notes.resolve, self._note_references), context
         ):
             nodes.append(html.element("h3", {}, [html.text(FOOTNOTE_HEADING)]))
-            nodes.append(html.element("ol", {"class": "footnotes"}, footnotes))
+            nodes.append(html.element("ol", {"class": "ezw-footnotes"}, footnotes))
         if self._literature:
             nodes.extend(self._literature)
         return nodes
