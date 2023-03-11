@@ -61,7 +61,8 @@ class Converter(mammoth.conversion._DocumentConverter):
 
     def visit_note_reference(self, note_reference, context):
         self._note_references.append(note_reference)
-        return [html.text(note_reference.note_id)]
+        note_number = len(self._note_references)
+        return [html.text(str(note_number))]
 
     def visit_note(self, note, context):
         note_html = self._visit_all(note.body, context)
